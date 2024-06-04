@@ -35,7 +35,11 @@ open class BaseCollectionViewController<SectionItem: Hashable, RowItem: Hashable
         animating: Bool = true,
         completion: (() -> Void)? = nil
     ) {
-        dataSource.applySnapshotUsingReloadData(snapshot)
+        if #available(iOS 15, *) {
+            dataSource.applySnapshotUsingReloadData(snapshot)
+        } else {
+            dataSource.apply(snapshot, animatingDifferences: animating, completion: completion)
+        }
     }
     
     open func dequeueReusableCell(for item: RowItem, at indexPath: IndexPath) -> UICollectionViewCell {
