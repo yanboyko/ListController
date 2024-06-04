@@ -30,6 +30,14 @@ open class BaseCollectionViewController<SectionItem: Hashable, RowItem: Hashable
         dataSource.apply(snapshot, animatingDifferences: animating, completion: completion)
     }
     
+    open func applyUsingReloadData(
+        _ snapshot: NSDiffableDataSourceSnapshot<SectionItem, RowItem>,
+        animating: Bool = true,
+        completion: (() -> Void)? = nil
+    ) {
+        dataSource.applySnapshotUsingReloadData(snapshot)
+    }
+    
     open func dequeueReusableCell(for item: RowItem, at indexPath: IndexPath) -> UICollectionViewCell {
         let cellIdentifier = cellReuseIdentifier(for: item, at: indexPath)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
